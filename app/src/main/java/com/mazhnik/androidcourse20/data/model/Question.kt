@@ -5,6 +5,8 @@
 
 package com.mazhnik.androidcourse20.data.model
 
+import android.text.Spanned
+import androidx.core.text.HtmlCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.JsonAdapter
@@ -15,9 +17,16 @@ import com.mazhnik.androidcourse20.data.remote.OwnerDeserializer
 data class Question (
     @SerializedName("title") val title: String,
     @SerializedName("score") val score: Int,
+    @SerializedName("body") val body: String,
     @SerializedName("owner")
     @JsonAdapter(OwnerDeserializer::class)
     val ownerName: String,
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
-)
+    @PrimaryKey
+    @SerializedName("question_id")
+    var id: Long,
+) {
+    fun getHtmlBody(): Spanned {
+        return HtmlCompat.fromHtml(body, HtmlCompat.FROM_HTML_MODE_COMPACT)
+    }
+}
 

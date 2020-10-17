@@ -18,10 +18,12 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.google.gson.Gson
+import com.mazhnik.androidcourse20.ui.AnswerListViewModel
 import okhttp3.OkHttpClient
 
 val viewModelModule = module {
     viewModel { QuestionListViewModel(get()) }
+    viewModel { AnswerListViewModel(get()) }
 }
 
 val repositoryModule = module {

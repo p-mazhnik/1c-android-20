@@ -6,34 +6,34 @@
 package com.mazhnik.androidcourse20.ui
 
 import androidx.lifecycle.*
+import com.mazhnik.androidcourse20.data.model.Answer
 import com.mazhnik.androidcourse20.data.model.Question
 import com.mazhnik.androidcourse20.data.repository.QuestionRepository
 import com.mazhnik.androidcourse20.data.utils.State
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
 
-class QuestionListViewModel(
+class AnswerListViewModel(
     private val questionRepository: QuestionRepository,
 ): ViewModel() {
-    private val _state = MutableLiveData<State<List<Question>>>()
-    val state: LiveData<State<List<Question>>>
+    val question = questionRepository.selectedQuestion
+
+    private val _state = MutableLiveData<State<List<Answer>>>()
+    val state: LiveData<State<List<Answer>>>
         get() = _state
 
     init {
         _state.value = State.loading()
-        getQuestions()
+        getAnswers()
     }
 
-    fun getQuestions() {
+    fun getAnswers() {
         viewModelScope.launch {
-            questionRepository.getAllQuestions().collect {
+            val question = question.value ?: return@launch
+            questionRepository.getAnswers(question.id).collect {
                 _state.value = it
             }
         }
-    }
-
-    fun select(question: Question) {
-        questionRepository.selectedQuestion.postValue(question)
     }
 }
 

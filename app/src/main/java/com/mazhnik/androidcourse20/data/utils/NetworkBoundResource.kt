@@ -13,45 +13,52 @@ import androidx.annotation.WorkerThread
 abstract class NetworkBoundResource<RES, REQ> {
 
     fun asFlow() = flow<State<RES>> {
-
+        val shouldSave = shouldSaveToLocal()
         // Emit Loading State
         emit(State.loading())
 
         // Emit Database content first
-        emit(State.success(fetchFromLocal().first()))
+        if (shouldSave) {
+            emit(State.success(fetchFromLocal().first()))
+        }
 
-        // Fetch latest posts from remote
+        // Fetch data from remote
         val apiResponse = fetchFromRemote()
-
-        // Parse body
-        val remotePosts = apiResponse.body()
+        val remoteData = apiResponse.body()
 
         // Check for response validation
-        if (apiResponse.isSuccessful && remotePosts != null) {
-            // Save posts into the persistence storage
-            saveRemoteData(remotePosts)
+        if (apiResponse.isSuccessful && remoteData != null) {
+            if(shouldSave) {
+                saveRemoteData(remoteToLocal(remoteData))
+            } else {
+                emit(State.success(remoteToLocal(remoteData)))
+            }
         } else {
-            // Something went wrong! Emit Error state.
             emit(State.error(apiResponse.message()))
         }
 
-        // Retrieve posts from persistence storage and emit
-        emitAll(
-            fetchFromLocal().map {
-                State.success(it)
-            }
-        )
+        if (shouldSave) {
+            emitAll(
+                fetchFromLocal().map {
+                    State.success(it)
+                }
+            )
+        }
     }.catch { e ->
         emit(State.error(e.message ?: ""))
     }
 
     @WorkerThread
-    protected abstract suspend fun saveRemoteData(response: REQ)
+    protected abstract suspend fun saveRemoteData(response: RES)
 
     @MainThread
     protected abstract fun fetchFromLocal(): Flow<RES>
 
     @WorkerThread
     protected abstract suspend fun fetchFromRemote(): Response<REQ>
+
+    protected abstract fun shouldSaveToLocal(): Boolean
+
+    protected abstract fun remoteToLocal(remote: REQ): RES
 }
 

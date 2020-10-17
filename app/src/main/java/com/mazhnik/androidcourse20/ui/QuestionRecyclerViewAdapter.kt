@@ -37,7 +37,7 @@ class QuestionRecyclerViewAdapter(
         if(questionList != null) {
             holder.bind(questionList[position])
             holder.itemView.setOnClickListener{
-                // viewModel.selectDevice(questionList[position])
+                viewModel.select(questionList[position])
                 val action = QuestionListFragmentDirections.actionQuestionListFragmentToQuestionFragment()
                 navController.navigate(action)
             }

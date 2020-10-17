@@ -14,6 +14,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.mazhnik.androidcourse20.MainActivity
+import com.mazhnik.androidcourse20.R
 import com.mazhnik.androidcourse20.data.model.Question
 import com.mazhnik.androidcourse20.data.utils.State
 import com.mazhnik.androidcourse20.databinding.FragmentQuestionListBinding
@@ -36,11 +39,12 @@ class QuestionListFragment : Fragment() {
         ).apply {
             lifecycleOwner = viewLifecycleOwner
         }
+        showLoadingState(true)
         return binding.root
     }
 
-    private fun setListAdapter(devices: List<Question>) {
-        viewAdapter = QuestionRecyclerViewAdapter(viewLifecycleOwner, devices, viewModel, findNavController())
+    private fun setListAdapter(questions: List<Question>) {
+        viewAdapter = QuestionRecyclerViewAdapter(viewLifecycleOwner, questions, viewModel, findNavController())
         recyclerView.adapter = viewAdapter
     }
 
@@ -66,19 +70,23 @@ class QuestionListFragment : Fragment() {
                     }
                     is State.Error -> {
                         showLoadingState(false)
-                        //TODO
+                        Snackbar.make(view, viewState.message, Snackbar.LENGTH_SHORT)
+                            .setAction(R.string.snackbar_retry_action_text) {
+                                viewModel.getQuestions()
+                            }
+                            .show()
                     }
                 }
             }
         })
 
-        binding.questionListSwipe.setOnRefreshListener {
+        (activity as MainActivity).setOnRefreshListener {
             viewModel.getQuestions()
         }
     }
 
     private fun showLoadingState(isLoading: Boolean) {
-        binding.questionListSwipe.isRefreshing = isLoading
+        (activity as MainActivity).showLoadingState(isLoading)
     }
 }
 
