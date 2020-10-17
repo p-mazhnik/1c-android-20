@@ -57,6 +57,7 @@ class QuestionListFragment : Fragment() {
         }
 
         setListAdapter(emptyList())
+        viewModel.getQuestions()
         viewModel.state.observe(viewLifecycleOwner, {viewState ->
             viewState?.let {
                 when(viewState) {

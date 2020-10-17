@@ -34,7 +34,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:text="@{viewModel.question.getHtmlBody()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:text="@{`Score: ` + viewModel.question.score}"
+                android:text="@{@string/score + `: ` + viewModel.question.score}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBody2"
@@ -54,7 +54,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:text="@{`Author: ` + viewModel.question.ownerName}"
+                android:text="@{@string/author + `: ` + viewModel.question.ownerName}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBody2"

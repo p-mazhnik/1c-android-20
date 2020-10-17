@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Android Stackoverflow</string>
     <string name="snackbar_retry_action_text">Retry</string>
+    <string name="author">Author</string>
+    <string name="score">Score</string>
 </resources>
 

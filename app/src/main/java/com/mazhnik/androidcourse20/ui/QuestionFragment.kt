@@ -60,6 +60,7 @@ class QuestionFragment : Fragment() {
         }
 
         setListAdapter(emptyList())
+        viewModel.getAnswers()
         viewModel.state.observe(viewLifecycleOwner, {viewState ->
             viewState?.let {
                 when(viewState) {

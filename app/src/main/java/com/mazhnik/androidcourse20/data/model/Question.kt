@@ -6,12 +6,13 @@
 package com.mazhnik.androidcourse20.data.model
 
 import android.text.Spanned
-import androidx.core.text.HtmlCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.JsonAdapter
 import com.google.gson.annotations.SerializedName
 import com.mazhnik.androidcourse20.data.remote.OwnerDeserializer
+import org.sufficientlysecure.htmltextview.HtmlFormatter
+import org.sufficientlysecure.htmltextview.HtmlFormatterBuilder
 
 @Entity
 data class Question (
@@ -26,7 +27,7 @@ data class Question (
     var id: Long,
 ) {
     fun getHtmlBody(): Spanned {
-        return HtmlCompat.fromHtml(body, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        return HtmlFormatter.formatHtml(HtmlFormatterBuilder().setHtml(body))
     }
 }
 

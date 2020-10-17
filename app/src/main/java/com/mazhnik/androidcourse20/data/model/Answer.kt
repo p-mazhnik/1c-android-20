@@ -6,8 +6,9 @@
 package com.mazhnik.androidcourse20.data.model
 
 import android.text.Spanned
-import androidx.core.text.HtmlCompat
 import com.google.gson.annotations.SerializedName
+import org.sufficientlysecure.htmltextview.HtmlFormatter
+import org.sufficientlysecure.htmltextview.HtmlFormatterBuilder
 
 
 data class Answer(
@@ -17,7 +18,7 @@ data class Answer(
     @SerializedName("answer_id") val id: Long,
 ) {
     fun getHtmlBody(): Spanned {
-        return HtmlCompat.fromHtml(body, HtmlCompat.FROM_HTML_MODE_COMPACT)
+        return HtmlFormatter.formatHtml(HtmlFormatterBuilder().setHtml(body))
     }
 }
 

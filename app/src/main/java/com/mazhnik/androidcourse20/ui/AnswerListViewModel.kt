@@ -24,7 +24,6 @@ class AnswerListViewModel(
 
     init {
         _state.value = State.loading()
-        getAnswers()
     }
 
     fun getAnswers() {

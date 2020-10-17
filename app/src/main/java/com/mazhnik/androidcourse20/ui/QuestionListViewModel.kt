@@ -21,7 +21,6 @@ class QuestionListViewModel(
 
     init {
         _state.value = State.loading()
-        getQuestions()
     }
 
     fun getQuestions() {
