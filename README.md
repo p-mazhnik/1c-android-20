@@ -17,3 +17,7 @@ The requirements were as follows:
 * [Retrofit2](https://github.com/square/retrofit)
 * [MaterialUI](https://material.io/develop/android)
 
+
+<hr/>
+
+[Flutter version](https://github.com/p-mazhnik/1c-android-20-flutter)
