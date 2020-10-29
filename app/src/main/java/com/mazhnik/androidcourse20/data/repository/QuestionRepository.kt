@@ -55,33 +55,31 @@ class QuestionRepository (
         return questionsResource.asFlow()
     }
 
-    private val answersResource =
-        object : NetworkBoundResource<List<Answer>, ListResponse<Answer>>() {
-            var questionId: Long? = null
+    class AnswersResource(
+        private val networkDataSource: StackOverflowApi,
+        private val questionId: Long,
+    ): NetworkBoundResource<List<Answer>, ListResponse<Answer>>() {
 
-            override suspend fun saveRemoteData(response: List<Answer>) {
-                Log.d(TAG, response.toString())
-                return
-            }
-
-            override fun fetchFromLocal(): Flow<List<Answer>> = flow {emit(emptyList<Answer>())}
-
-            override suspend fun fetchFromRemote(): Response<ListResponse<Answer>> {
-                if (questionId == null) {
-                    throw Exception("Please, provide Question Id")
-                }
-                return networkDataSource.getAnswers(questionId!!)
-            }
-
-            override fun shouldSaveToLocal(): Boolean = false
-
-            override fun remoteToLocal(remote: ListResponse<Answer>): List<Answer> {
-                return remote.items
-            }
+        override suspend fun saveRemoteData(response: List<Answer>) {
+            Log.d(TAG, response.toString())
+            return
         }
 
+        override fun fetchFromLocal(): Flow<List<Answer>> = flow {emit(emptyList<Answer>())}
+
+        override suspend fun fetchFromRemote(): Response<ListResponse<Answer>> {
+            return networkDataSource.getAnswers(questionId)
+        }
+
+        override fun shouldSaveToLocal(): Boolean = false
+
+        override fun remoteToLocal(remote: ListResponse<Answer>): List<Answer> {
+            return remote.items
+        }
+    }
+
     fun getAnswers(questionId: Long): Flow<State<List<Answer>>> {
-        answersResource.questionId = questionId
+        val answersResource = AnswersResource(networkDataSource, questionId)
         return answersResource.asFlow()
     }
 }

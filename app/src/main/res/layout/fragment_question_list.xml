@@ -14,8 +14,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:scrollbars="vertical"
-        tools:listitem="@layout/question_item"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        tools:listitem="@layout/question_item" />
 
 </layout>
 

@@ -9,70 +9,21 @@
             name="viewModel"
             type="com.mazhnik.androidcourse20.ui.AnswerListViewModel" />
     </data>
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="@{viewModel.question.title}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:padding="4dp"
-                android:textAlignment="textEnd"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <org.sufficientlysecure.htmltextview.HtmlTextView
-                android:text="@{viewModel.question.getHtmlBody()}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:paddingHorizontal="20dp"
-                android:layout_marginTop="4dp"
-                android:textSize="16sp" />
-
-            <TextView
-                android:text="@{@string/score + `: ` + viewModel.question.score}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:paddingHorizontal="20dp"
-                android:layout_marginTop="4dp"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
-
-            <TextView
-                android:text="@{@string/author + `: ` + viewModel.question.ownerName}"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textAlignment="textEnd"
-                android:paddingHorizontal="20dp"
-                android:textSize="16sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/answer_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:scrollbars="vertical"
-                tools:listitem="@layout/answer_item"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/answer_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/answer_item" />
     </androidx.core.widget.NestedScrollView>
 </layout>
 
