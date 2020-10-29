@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,12 +8,7 @@
             name="viewModel"
             type="com.mazhnik.androidcourse20.ui.AnswerListViewModel" />
     </data>
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/answer_list"
         android:layout_width="match_parent"
@@ -24,6 +18,6 @@
         android:paddingRight="16dp"
         android:scrollbars="vertical"
         tools:listitem="@layout/answer_item" />
-    </androidx.core.widget.NestedScrollView>
+
 </layout>
 

@@ -54,9 +54,8 @@ class QuestionFragment : Fragment() {
         viewManager = LinearLayoutManager(activity)
 
         recyclerView = binding.answerList.apply {
-            setHasFixedSize(false)
+            setHasFixedSize(true)
             layoutManager = viewManager
-            isNestedScrollingEnabled = false
         }
 
         setListAdapter(emptyList())
